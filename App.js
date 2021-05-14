@@ -1,21 +1,53 @@
 import { StatusBar } from 'expo-status-bar';
+import {AntDesign} from "@expo/vector-icons"
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View, TouchableOpacity, Image} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import Login from "./screens/Login";
+import Cadastro from "./screens/Cadastro";
+import {styleFormat} from './css/styles'
+
+const pilha = createStackNavigator();
 
 export default function App() {
+return(
+  <NavigationContainer>
+    <pilha.Navigator initalRoute="Tela Inicial">
+      <pilha.Screen name="TelaInicial" component={TelaInicial} options={{headerShown:false}}/>
+      <pilha.Screen name="Login" component={Login} options={{headerTitleAlign:'center'}}/>
+      <pilha.Screen name="Cadastro" component={Cadastro} options={{headerTitleAlign:'center'}}/>
+    </pilha.Navigator>
+
+  </NavigationContainer>
+)
+
+}
+
+function TelaInicial({navigation}) {
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <View style={styleFormat.container}>
+      <Image
+        source={{
+          uri:
+            "https://i.pinimg.com/originals/ee/59/a6/ee59a6254c2c9b52c7177d0cfe7e36c5.png",
+        }}
+        style={styleFormat.logo}
+      />
+
+      <View style={styleFormat.btnApp}>
+        <TouchableOpacity style={styleFormat.btn} onPress={()=>navigation.navigate("Login")}>
+          <AntDesign name="login" size={30} color="black" />
+          <Text>Login</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styleFormat.btn} onPress={()=>navigation.navigate("Cadastro")}>
+          <AntDesign name="adduser" size={30} color="black" />
+          <Text>Cadastro</Text>
+        </TouchableOpacity>
+      </View>
       <StatusBar style="auto" />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
